@@ -101,6 +101,23 @@ class RecipientsController {
       cep,
     });
   }
+
+  async index(req, res) {
+    const resultRecipients = await Recipients.findAll({
+      attributes: [
+        'id',
+        'name',
+        'street',
+        'number',
+        'complement',
+        'state',
+        'city',
+        'cep',
+      ],
+    });
+
+    return res.json(resultRecipients);
+  }
 }
 
 export default new RecipientsController();
