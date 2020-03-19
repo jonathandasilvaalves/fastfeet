@@ -19,7 +19,7 @@ class Orders extends Model {
   static associate(models) {
     this.belongsTo(models.Recipients, { foreignKey: 'recipient_id' });
     this.belongsTo(models.Deliverymans, { foreignKey: 'deliveryman_id' });
-    // this.belongsTo(models.Signatures, { foreignKey: 'signature_id' });
+    this.belongsTo(models.Signatures, { foreignKey: 'signature_id' });
   }
 }
 

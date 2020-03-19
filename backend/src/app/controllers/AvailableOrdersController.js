@@ -1,9 +1,10 @@
 import { parseISO, startOfDay, endOfDay, getHours } from 'date-fns';
 
 import * as Yup from 'yup';
-import { Op, or } from 'sequelize';
+import { Op } from 'sequelize';
 import Deliverymans from '../models/Deliverymans';
 import Orders from '../models/Orders';
+import Signatures from '../models/Signatures';
 
 class AvailableOrdersController {
   async index(req, res) {
@@ -33,13 +34,14 @@ class AvailableOrdersController {
       deliveryman_id: Yup.number().required(),
       start_date: Yup.date(),
       end_date: Yup.date(),
+      signature_id: Yup.number(),
     });
 
     if (!(await schema.isValid(req.body))) {
       return res.status(400).json({ error: 'Validation fails' });
     }
 
-    const { id, deliveryman_id, start_date, end_date } = req.body;
+    const { id, deliveryman_id, start_date, signature_id } = req.body;
 
     const order = await Orders.findOne({ where: { id } });
 
@@ -66,10 +68,21 @@ class AvailableOrdersController {
       if (hoursRegister < 8 || hoursRegister > 18) {
         return res.status(400).json({ error: 'Registration permission time' });
       }
-      return res.json(hoursRegister);
     }
 
-    return res.json('Sucesso');
+    if (signature_id) {
+      const signature = await Signatures.findOne({
+        where: { id: signature_id },
+      });
+
+      if (!signature) {
+        return res.status(400).json({ error: 'Signature does not exists!' });
+      }
+    }
+
+    const result = await order.update(req.body);
+
+    return res.json(result);
   }
 }
 

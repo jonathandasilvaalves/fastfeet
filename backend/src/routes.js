@@ -21,8 +21,9 @@ routes.post('/sessions', SessionController.store);
 routes.get('/deliveryman/:id', AvailableController.index);
 routes.get('/deliveryman/:id/deliveries', AvailableOrdersController.index);
 routes.put('/deliveryman/order', AvailableOrdersController.update);
+routes.post('/signature', upload.single('file'), SignatureController.store);
 
-// routes.use(authMiddleware);
+routes.use(authMiddleware);
 
 routes.post('/recipients', RecipientsController.store);
 routes.put('/recipients', RecipientsController.update);
@@ -34,8 +35,6 @@ routes.delete('/deliveryman/:id', DeliverymanController.delete);
 routes.get('/deliveryman', DeliverymanController.index);
 
 routes.post('/files', upload.single('file'), FileDeliverymanController.store);
-
-routes.post('/signature', upload.single('file'), SignatureController.store);
 
 routes.post('/orders', OrdersController.store);
 routes.get('/orders', OrdersController.index);
