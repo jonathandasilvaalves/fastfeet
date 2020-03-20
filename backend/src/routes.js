@@ -10,11 +10,15 @@ import SignatureController from './app/controllers/SignaturesController';
 import OrdersController from './app/controllers/OrdersController';
 import AvailableController from './app/controllers/AvailableController';
 import AvailableOrdersController from './app/controllers/AvailableOrdersController';
+import DeliveryProblemsController from './app/controllers/DeliveryProblemsController';
+import DistributorProblemController from './app/controllers/DistributorProblemController';
 
 import authMiddleware from './app/middlewares/auth';
 
 const routes = new Router();
 const upload = multer(multerConfig);
+
+routes.get('/deliverym/teste', DistributorProblemController.index);
 
 routes.post('/sessions', SessionController.store);
 
@@ -22,6 +26,9 @@ routes.get('/deliveryman/:id', AvailableController.index);
 routes.get('/deliveryman/:id/deliveries', AvailableOrdersController.index);
 routes.put('/deliveryman/order', AvailableOrdersController.update);
 routes.post('/signature', upload.single('file'), SignatureController.store);
+
+routes.post('/delivery/problems', DeliveryProblemsController.store);
+routes.get('/deliverym/:id/problems', DeliveryProblemsController.index);
 
 routes.use(authMiddleware);
 

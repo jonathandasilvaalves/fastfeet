@@ -6,6 +6,7 @@ import DeliverymanFiles from '../app/models/DeliverymanFiles';
 import Deliverymans from '../app/models/Deliverymans';
 import Orders from '../app/models/Orders';
 import Signatures from '../app/models/Signatures';
+import DeliveryProblems from '../app/models/DeliveryProblems';
 
 import databaseConfig from '../config/database';
 
@@ -16,6 +17,7 @@ const models = [
   DeliverymanFiles,
   Orders,
   Signatures,
+  DeliveryProblems,
 ];
 
 class Database {
