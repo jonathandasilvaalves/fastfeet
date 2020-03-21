@@ -1,6 +1,9 @@
 import * as Yup from 'yup';
 import DeliveryProblems from '../models/DeliveryProblems';
 import Orders from '../models/Orders';
+import Deliveryman from '../models/Deliverymans';
+
+import Mail from '../../lib/Mail';
 
 class DeliveryProblemsController {
   async store(req, res) {
@@ -52,7 +55,19 @@ class DeliveryProblemsController {
 
     await order.save();
 
-    return res.json(order);
+    const deliveryman = await Deliveryman.findByPk(order.deliveryman_id);
+
+    await Mail.sendMail({
+      to: `${deliveryman.name} <${deliveryman.email}>`,
+      subject: 'Entrega Cancelada',
+      template: 'cancelamento',
+      context: {
+        deliveryman: deliveryman.name,
+        product: order.product,
+      },
+    });
+
+    return res.json({ order });
   }
 }
 
