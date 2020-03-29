@@ -4,6 +4,7 @@ import { Op } from 'sequelize';
 import Orders from '../models/Orders';
 import Recipient from '../models/Recipients';
 import Deliveryman from '../models/Deliverymans';
+import DeliverymanFile from '../models/DeliverymanFiles';
 
 import Mail from '../../lib/Mail';
 
@@ -53,7 +54,7 @@ class OrdersController {
     const orders = await Orders.findAll({
       where: {
         product: {
-          [Op.like]: `%${name}%`,
+          [Op.iLike]: `%${name}%`,
         },
       },
       order: ['id'],
@@ -68,6 +69,19 @@ class OrdersController {
       ],
       limit: 20,
       offset: (page - 1) * 20,
+      include: [
+        { model: Recipient, attributes: ['id', 'name', 'state', 'city'] },
+        {
+          model: Deliveryman,
+          attributes: ['id', 'name'],
+          include: [
+            {
+              model: DeliverymanFile,
+              attributes: ['id', 'name', 'path', 'url'],
+            },
+          ],
+        },
+      ],
     });
     return res.json(orders);
   }

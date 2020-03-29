@@ -99,7 +99,9 @@ class DeliverymanController {
       attributes: ['id', 'name', 'email'],
       limit: 20,
       offset: (page - 1) * 20,
-      include: [{ model: DeliverymanFiles, attributes: ['id', 'name'] }],
+      include: [
+        { model: DeliverymanFiles, attributes: ['id', 'name', 'path', 'url'] },
+      ],
     });
 
     return res.json(deliveryman);
