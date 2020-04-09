@@ -1,32 +1,51 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { MdAdd, MdSearch, MdMoreHoriz } from 'react-icons/md';
+import { MdAdd, MdSearch, MdBrightness1 } from 'react-icons/md';
+
+import ActionsOrder from '~/components/ActionsOrder';
 
 import api from '~/services/api';
 
-import { Container, Search, Listing } from './styles';
+import { Container, Search, Listing, Status, Pagination } from './styles';
 
-export default function Dashboard() {
+export default function Orders() {
   const [orders, setOrders] = useState([]);
   const [nameOrder, setNameOrder] = useState('');
+  const [page, setPage] = useState(1);
 
   useEffect(() => {
     async function loadOrders() {
       const response = await api.get('orders', {
         params: {
-          page: 1,
+          page,
+          per_page: 5,
           name: nameOrder,
         },
       });
 
-      setOrders(response.data);
+      const data = response.data.map(order => ({
+        ...order,
+        status: order.canceled_at
+          ? 'Cancelado'
+          : order.end_date
+          ? 'Entregue'
+          : order.start_date
+          ? 'Retirado'
+          : 'Pendente',
+      }));
+      console.tron.log(page);
+      setOrders(data);
     }
     loadOrders();
-  }, [nameOrder]);
+  }, [nameOrder, page]);
 
   function handleInputChange(e) {
     setNameOrder(e.target.value);
-    console.tron.log(nameOrder);
+  }
+
+  async function handlePage(action) {
+    setPage(action === 'back' ? page - 1 : page + 1);
+    console.tron.log(page);
   }
 
   return (
@@ -44,7 +63,7 @@ export default function Dashboard() {
           </Search>
           <button type="button">
             <MdAdd size={20} color="#fff" />
-            <Link to="/">CADASTRAR</Link>
+            <Link to="/orders/create">CADASTRAR</Link>
           </button>
         </div>
       </header>
@@ -62,7 +81,7 @@ export default function Dashboard() {
         </thead>
         <tbody>
           {orders.map(order => (
-            <tr>
+            <tr key={order.id}>
               <td>#{order.id}</td>
               <td>{order.Recipient.name}</td>
               <td>
@@ -80,14 +99,32 @@ export default function Dashboard() {
               </td>
               <td>{order.Recipient.city}</td>
               <td>{order.Recipient.state}</td>
-              <td>Entregue</td>
               <td>
-                <MdMoreHoriz size={25} />
+                <Status statusOrder={order.status}>
+                  <MdBrightness1 size={10} />
+                  {order.status}
+                </Status>
+              </td>
+              <td>
+                <ActionsOrder />
               </td>
             </tr>
           ))}
         </tbody>
       </Listing>
+      <Pagination>
+        <button
+          type="button"
+          disabled={page < 2}
+          onClick={() => handlePage('back')}
+        >
+          Anterior
+        </button>
+        <span>Página {page}</span>
+        <button type="button" onClick={() => handlePage('next')}>
+          Próximo
+        </button>
+      </Pagination>
     </Container>
   );
 }

@@ -67,8 +67,8 @@ class OrdersController {
         'start_date',
         'end_date',
       ],
-      limit: 20,
-      offset: (page - 1) * 20,
+      limit: 5,
+      offset: (page - 1) * 5,
       include: [
         { model: Recipient, attributes: ['id', 'name', 'state', 'city'] },
         {

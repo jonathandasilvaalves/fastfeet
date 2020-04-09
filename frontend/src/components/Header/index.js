@@ -11,10 +11,10 @@ export default function Header() {
       <Content>
         <nav>
           <img src={logo} alt="Fastfeet" />
-          <Link to="/dashboard">ENCOMENDAS</Link>
-          <Link to="/dashboard">ENTREGADORES</Link>
-          <Link to="/dashboard">DESTINATÁRIOS</Link>
-          <Link to="/dashboard">PROBLEMAS</Link>
+          <Link to="/orders">ENCOMENDAS</Link>
+          <Link to="/deliverymans">ENTREGADORES</Link>
+          <Link to="/recipients">DESTINATÁRIOS</Link>
+          <Link to="/problems">PROBLEMAS</Link>
         </nav>
         <aside>
           <Profile>

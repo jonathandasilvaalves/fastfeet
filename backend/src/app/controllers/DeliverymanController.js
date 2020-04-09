@@ -87,12 +87,34 @@ class DeliverymanController {
   }
 
   async index(req, res) {
-    const { page = 1, name } = req.query;
+    const { page = 1, name = '', id } = req.query;
 
+    if (id) {
+      const deliveryman = await Deliverymans.findAll({
+        where: {
+          name: {
+            [Op.iLike]: `%${name}%`,
+          },
+          id,
+        },
+        order: ['name'],
+        attributes: ['id', 'name', 'email'],
+        limit: 20,
+        offset: (page - 1) * 20,
+        include: [
+          {
+            model: DeliverymanFiles,
+            attributes: ['id', 'name', 'path', 'url'],
+          },
+        ],
+      });
+
+      return res.json(deliveryman);
+    }
     const deliveryman = await Deliverymans.findAll({
       where: {
         name: {
-          [Op.like]: `%${name}%`,
+          [Op.iLike]: `%${name}%`,
         },
       },
       order: ['name'],
