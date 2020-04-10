@@ -4,16 +4,29 @@ import api from '~/services/api';
 
 import { Container } from './styles';
 
-export default function Avatar({ name }) {
+export default function Avatar({ name, id }) {
   const { defaultValue, registerField } = useField(name);
 
   const [file, setFile] = useState(defaultValue && defaultValue.id);
-  const [preview, setPreview] = useState(defaultValue && defaultValue.url);
+  const [preview, setPreview] = useState(null);
 
   const ref = useRef();
 
+  async function getFile(elm) {
+    if (elm) {
+      const { data } = await api.get('deliveryman', {
+        params: {
+          id,
+        },
+      });
+      const response = data[0].DeliverymanFile;
+      if (response) {
+        setPreview(response.url);
+      }
+    }
+  }
+
   useEffect(() => {
-    console.tron.log(`Avatar ${defaultValue}`);
     if (ref.current) {
       registerField({
         name,
@@ -21,7 +34,11 @@ export default function Avatar({ name }) {
         path: 'dataset.file',
       });
     }
-  }, [ref, registerField, defaultValue]);
+  }, [ref, registerField]);
+
+  useEffect(() => {
+    getFile(id);
+  }, []);
 
   async function handleChange(e) {
     const data = new FormData();

@@ -7,7 +7,7 @@ import Avatar from '~/components/Avatar';
 
 import { Container, Blocimage, BlocInputs, Campsform } from './styles';
 
-export default function FormDeliveryman({ title, initial, functi }) {
+export default function FormDeliveryman({ title, initial, functi, id }) {
   return (
     <Container>
       <Form initialData={initial} onSubmit={functi}>
@@ -26,7 +26,7 @@ export default function FormDeliveryman({ title, initial, functi }) {
         </header>
         <Campsform>
           <Blocimage>
-            <Avatar name="deliverymanfile" />
+            <Avatar name="deliverymanfile" id={id} />
           </Blocimage>
           <BlocInputs>
             <strong>Nome</strong>

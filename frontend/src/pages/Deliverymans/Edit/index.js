@@ -21,7 +21,6 @@ export default function EditDeliveryman() {
       });
       const response = data[0];
       setDados(response);
-      console.tron.log(response);
     }
     handleOpen();
   }, []);
@@ -42,6 +41,7 @@ export default function EditDeliveryman() {
         title="Editar entregadores"
         initial={dados}
         functi={() => handleSubmit}
+        id={id}
       />
     </>
   );
