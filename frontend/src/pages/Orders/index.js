@@ -106,7 +106,7 @@ export default function Orders() {
                 </Status>
               </td>
               <td>
-                <ActionsOrder />
+                <ActionsOrder url={`orders/edit/${order.id}`} edit delet view />
               </td>
             </tr>
           ))}

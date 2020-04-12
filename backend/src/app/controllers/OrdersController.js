@@ -48,9 +48,44 @@ class OrdersController {
   }
 
   async index(req, res) {
-    const { page = 1 } = req.query;
-    const { name } = req.query;
+    const { page = 1, name = '', id } = req.query;
 
+    if (id) {
+      const orders = await Orders.findAll({
+        where: {
+          product: {
+            [Op.iLike]: `%${name}%`,
+          },
+          id,
+        },
+        order: ['id'],
+        attributes: [
+          'id',
+          'recipient_id',
+          'deliveryman_id',
+          'product',
+          'canceled_at',
+          'start_date',
+          'end_date',
+        ],
+        limit: 5,
+        offset: (page - 1) * 5,
+        include: [
+          { model: Recipient, attributes: ['id', 'name', 'state', 'city'] },
+          {
+            model: Deliveryman,
+            attributes: ['id', 'name'],
+            include: [
+              {
+                model: DeliverymanFile,
+                attributes: ['id', 'name', 'path', 'url'],
+              },
+            ],
+          },
+        ],
+      });
+      return res.json(orders);
+    }
     const orders = await Orders.findAll({
       where: {
         product: {

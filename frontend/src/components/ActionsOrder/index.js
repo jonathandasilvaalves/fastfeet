@@ -8,13 +8,20 @@ import {
 
 import history from '~/services/history';
 
-import { Container, Badge, Actions, Action } from './styles';
+import {
+  Container,
+  Badge,
+  Actions,
+  ActionView,
+  ActionEdit,
+  ActionDelete,
+} from './styles';
 
-export default function ActionsOrder({ id }) {
+export default function ActionsOrder({ url, edit, delet, view }) {
   const [visible, setVisible] = useState(false);
 
   function handleEdit() {
-    history.push(`deliverymans/edit/${id}`);
+    history.push(`${url}`);
   }
 
   return (
@@ -28,18 +35,18 @@ export default function ActionsOrder({ id }) {
       </Badge>
 
       <Actions visible={visible}>
-        <Action>
+        <ActionView visible={view}>
           <MdVisibility size={15} color="#7149c1" />
           <button type="button">Visualizar</button>
-        </Action>
-        <Action onClick={() => handleEdit()}>
+        </ActionView>
+        <ActionEdit visible={edit} onClick={() => handleEdit()}>
           <MdModeEdit size={15} color="#0066ff" />
           <button type="button">Editar</button>
-        </Action>
-        <Action>
+        </ActionEdit>
+        <ActionDelete visible={delet}>
           <MdDeleteForever size={15} color="#ff0000" />
           <button type="button">Excluir</button>
-        </Action>
+        </ActionDelete>
       </Actions>
     </Container>
   );

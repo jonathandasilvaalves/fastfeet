@@ -105,7 +105,33 @@ class RecipientsController {
   }
 
   async index(req, res) {
-    const { name } = req.query;
+    const { name = '', page = 1, id } = req.query;
+
+    if (id) {
+      const resultRecipients = await Recipients.findAll({
+        where: {
+          name: {
+            [Op.iLike]: `%${name}%`,
+          },
+          id,
+        },
+        order: ['name'],
+        attributes: [
+          'id',
+          'name',
+          'street',
+          'number',
+          'complement',
+          'state',
+          'city',
+          'cep',
+        ],
+        limit: 20,
+        offset: (page - 1) * 20,
+      });
+
+      return res.json(resultRecipients);
+    }
 
     const resultRecipients = await Recipients.findAll({
       where: {

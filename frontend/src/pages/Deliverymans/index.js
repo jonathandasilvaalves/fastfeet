@@ -77,7 +77,12 @@ export default function Orders() {
               <td>{deliveryman.name}</td>
               <td>{deliveryman.email}</td>
               <td>
-                <ActionsOrder id={deliveryman.id} />
+                <ActionsOrder
+                  url={`deliverymans/edit/${deliveryman.id}`}
+                  edit
+                  delet
+                  view={false}
+                />
               </td>
             </tr>
           ))}

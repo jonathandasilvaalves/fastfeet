@@ -36,10 +36,35 @@ export const Actions = styled.div`
     border-bottom: 5px solid #999999;
   }
 `;
-export const Action = styled.div`
+export const ActionView = styled.div`
   color: #fff;
   border-bottom: 1px solid #999999;
   padding: 4px;
+  display: ${props => (props.visible ? 'block' : 'none')} !important;
+
+  button {
+    font-size: 12px;
+    border: 0;
+    background: none;
+  }
+`;
+export const ActionEdit = styled.div`
+  color: #fff;
+  border-bottom: 1px solid #999999;
+  padding: 4px;
+  display: ${props => (props.visible ? 'block' : 'none')} !important;
+
+  button {
+    font-size: 12px;
+    border: 0;
+    background: none;
+  }
+`;
+export const ActionDelete = styled.div`
+  color: #fff;
+  border-bottom: 1px solid #999999;
+  padding: 4px;
+  display: ${props => (props.visible ? 'block' : 'none')} !important;
 
   button {
     font-size: 12px;
