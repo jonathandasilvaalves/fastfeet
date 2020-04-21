@@ -71,7 +71,10 @@ class OrdersController {
         limit: 5,
         offset: (page - 1) * 5,
         include: [
-          { model: Recipient, attributes: ['id', 'name', 'state', 'city'] },
+          {
+            model: Recipient,
+            attributes: ['id', 'name', 'state', 'city', 'street', 'cep'],
+          },
           {
             model: Deliveryman,
             attributes: ['id', 'name'],
@@ -105,7 +108,10 @@ class OrdersController {
       limit: 5,
       offset: (page - 1) * 5,
       include: [
-        { model: Recipient, attributes: ['id', 'name', 'state', 'city'] },
+        {
+          model: Recipient,
+          attributes: ['id', 'name', 'state', 'city', 'street', 'cep'],
+        },
         {
           model: Deliveryman,
           attributes: ['id', 'name'],

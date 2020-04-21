@@ -3,15 +3,17 @@ import { Link } from 'react-router-dom';
 import { MdAdd, MdSearch, MdBrightness1 } from 'react-icons/md';
 
 import ActionsOrder from '~/components/ActionsOrder';
+import Pagination from '~/components/Pagination';
 
 import api from '~/services/api';
 
-import { Container, Search, Listing, Status, Pagination } from './styles';
+import { Container, Search, Listing, Status } from './styles';
 
 export default function Orders() {
   const [orders, setOrders] = useState([]);
   const [nameOrder, setNameOrder] = useState('');
   const [page, setPage] = useState(1);
+  const [reflesh, setReflesh] = useState(false);
 
   useEffect(() => {
     async function loadOrders() {
@@ -33,19 +35,22 @@ export default function Orders() {
           ? 'Retirado'
           : 'Pendente',
       }));
-      console.tron.log(page);
       setOrders(data);
+      setReflesh(false);
     }
     loadOrders();
-  }, [nameOrder, page]);
+  }, [nameOrder, page, reflesh]);
 
   function handleInputChange(e) {
     setNameOrder(e.target.value);
   }
 
+  function handleReflesh() {
+    setReflesh(true);
+  }
+
   async function handlePage(action) {
     setPage(action === 'back' ? page - 1 : page + 1);
-    console.tron.log(page);
   }
 
   return (
@@ -106,25 +111,20 @@ export default function Orders() {
                 </Status>
               </td>
               <td>
-                <ActionsOrder url={`orders/edit/${order.id}`} edit delet view />
+                <ActionsOrder
+                  entity="orders"
+                  item={order}
+                  edit
+                  delet
+                  view
+                  reflesh={handleReflesh}
+                />
               </td>
             </tr>
           ))}
         </tbody>
       </Listing>
-      <Pagination>
-        <button
-          type="button"
-          disabled={page < 2}
-          onClick={() => handlePage('back')}
-        >
-          Anterior
-        </button>
-        <span>Página {page}</span>
-        <button type="button" onClick={() => handlePage('next')}>
-          Próximo
-        </button>
-      </Pagination>
+      <Pagination funcPage={handlePage} page={page} />
     </Container>
   );
 }

@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { MdAdd, MdSearch } from 'react-icons/md';
 
 import ActionsOrder from '~/components/ActionsOrder';
+import Pagination from '~/components/Pagination';
 
 import api from '~/services/api';
 
@@ -11,22 +12,34 @@ import { Container, Search, Listing } from './styles';
 export default function Orders() {
   const [deliverymans, setDeliverymans] = useState([]);
   const [nameDeliveryman, setNameDeliveryman] = useState('');
+  const [page, setPage] = useState(1);
+  const [reflesh, setReflesh] = useState(false);
 
   useEffect(() => {
     async function loadDeliveryman() {
       const { data } = await api.get('deliveryman', {
         params: {
-          page: 1,
+          page,
+          per_page: 5,
           name: nameDeliveryman,
         },
       });
       setDeliverymans(data);
+      setReflesh(false);
     }
     loadDeliveryman();
-  }, [nameDeliveryman]);
+  }, [nameDeliveryman, page, reflesh]);
 
   function handleInputChange(e) {
     setNameDeliveryman(e.target.value);
+  }
+
+  function handleReflesh() {
+    setReflesh(true);
+  }
+
+  async function handlePage(action) {
+    setPage(action === 'back' ? page - 1 : page + 1);
   }
 
   return (
@@ -78,16 +91,19 @@ export default function Orders() {
               <td>{deliveryman.email}</td>
               <td>
                 <ActionsOrder
-                  url={`deliverymans/edit/${deliveryman.id}`}
+                  entity="deliveryman"
+                  item={deliveryman}
                   edit
                   delet
                   view={false}
+                  reflesh={handleReflesh}
                 />
               </td>
             </tr>
           ))}
         </tbody>
       </Listing>
+      <Pagination funcPage={handlePage} page={page} />
     </Container>
   );
 }

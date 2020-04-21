@@ -35,7 +35,7 @@ export default function FormDeliveryman({ title, initial, functi, id }) {
             <Input
               name="email"
               type="email"
-              placeholder="Seu endereço de e-mail "
+              placeholder="Seu endereço de e-mail"
             />
           </BlocInputs>
         </Campsform>

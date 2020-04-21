@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { MdAdd, MdSearch } from 'react-icons/md';
 
 import ActionsOrder from '~/components/ActionsOrder';
+import Pagination from '~/components/Pagination';
 
 import api from '~/services/api';
 
@@ -11,12 +12,14 @@ import { Container, Search, Listing } from './styles';
 export default function Recipients() {
   const [recipients, setRecipients] = useState([]);
   const [nameRecipient, setNameRecipient] = useState('');
+  const [page, setPage] = useState(1);
+  const [reflesh, setReflesh] = useState(false);
 
   useEffect(() => {
     async function loadDeliveryman() {
       const { data } = await api.get('recipients', {
         params: {
-          page: 1,
+          page,
           name: nameRecipient,
         },
       });
@@ -29,16 +32,23 @@ export default function Recipients() {
       setRecipients(response);
     }
     loadDeliveryman();
-  }, [nameRecipient]);
+  }, [nameRecipient, page, reflesh]);
+
+  function handleReflesh() {
+    setReflesh(true);
+  }
 
   function handleInputChange(e) {
     setNameRecipient(e.target.value);
+  }
+  async function handlePage(action) {
+    setPage(action === 'back' ? page - 1 : page + 1);
   }
 
   return (
     <Container>
       <header>
-        <strong>Gerenciando entregadores</strong>
+        <strong>Gerenciando destinatários</strong>
         <div>
           <Search>
             <MdSearch size={20} />
@@ -70,12 +80,20 @@ export default function Recipients() {
               <td>{recipient.name}</td>
               <td>{recipient.address}</td>
               <td>
-                <ActionsOrder />
+                <ActionsOrder
+                  entity="recipient"
+                  item={recipient}
+                  edit
+                  delet
+                  view={false}
+                  reflesh={handleReflesh}
+                />
               </td>
             </tr>
           ))}
         </tbody>
       </Listing>
+      <Pagination funcPage={handlePage} page={page} />
     </Container>
   );
 }

@@ -99,8 +99,8 @@ class DeliverymanController {
         },
         order: ['name'],
         attributes: ['id', 'name', 'email'],
-        limit: 20,
-        offset: (page - 1) * 20,
+        limit: 5,
+        offset: (page - 1) * 5,
         include: [
           {
             model: DeliverymanFiles,
@@ -119,8 +119,8 @@ class DeliverymanController {
       },
       order: ['name'],
       attributes: ['id', 'name', 'email'],
-      limit: 20,
-      offset: (page - 1) * 20,
+      limit: 5,
+      offset: (page - 1) * 5,
       include: [
         { model: DeliverymanFiles, attributes: ['id', 'name', 'path', 'url'] },
       ],
