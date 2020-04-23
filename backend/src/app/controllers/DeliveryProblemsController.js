@@ -34,10 +34,14 @@ class DeliveryProblemsController {
   }
 
   async index(req, res) {
+    const { page = 1 } = req.query;
     const problems = await DeliveryProblems.findAll({
       where: {
         delivery_id: req.params.id,
       },
+      order: ['id'],
+      limit: 5,
+      offset: (page - 1) * 5,
     });
 
     return res.status(200).json({ problems });

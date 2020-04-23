@@ -5,10 +5,10 @@ import { MdNavigateBefore, MdCheck } from 'react-icons/md';
 
 import { Container, BlocInputs, Campsform, CompInputs } from './styles';
 
-export default function FormRecipients({ title, initial, functi, id }) {
+export default function FormRecipients({ title, initial, func, id }) {
   return (
     <Container>
-      <Form initialData={initial} onSubmit={functi}>
+      <Form initialData={initial} onSubmit={func}>
         <header>
           <strong>{title}</strong>
           <div>

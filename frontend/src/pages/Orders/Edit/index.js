@@ -34,7 +34,6 @@ export default function EditOrder() {
         deliveryman_id: data.deliveryman_id,
         product: data.product,
       });
-      console.tron.log(data);
       toast.success('Encomenda editada com sucesso!');
       history.push('/orders');
     } catch (e) {

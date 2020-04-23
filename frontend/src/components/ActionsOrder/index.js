@@ -30,6 +30,7 @@ export default function ActionsOrder({
   delet,
   view,
   reflesh,
+  canceled,
 }) {
   const [visible, setVisible] = useState(false);
   const [openView, setOpenView] = useState(false);
@@ -90,6 +91,11 @@ export default function ActionsOrder({
         <ActionDelete visible={delet} onClick={() => deleteItem()}>
           <MdDeleteForever size={15} color="#ff0000" />
           <button type="button">Excluir</button>
+        </ActionDelete>
+
+        <ActionDelete visible={canceled} onClick={() => deleteItem()}>
+          <MdDeleteForever size={15} color="#ff0000" />
+          <button type="button">Cancelar encomenda</button>
         </ActionDelete>
       </Actions>
       {entity === 'orders' && (

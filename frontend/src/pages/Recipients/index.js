@@ -60,7 +60,7 @@ export default function Recipients() {
           </Search>
           <button type="button">
             <MdAdd size={20} color="#fff" />
-            <Link to="/recipients/create">CADASTRAR</Link>
+            <Link to="/recipient/create">CADASTRAR</Link>
           </button>
         </div>
       </header>
