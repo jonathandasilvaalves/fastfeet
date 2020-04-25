@@ -34,6 +34,10 @@ export const Content = styled.div`
         color: #000000;
       }
     }
+
+    .selected {
+      color: #444;
+    }
   }
   aside {
     display: flex;

@@ -41,9 +41,15 @@ export default function ActionsOrder({
 
   async function handleDelete(id) {
     try {
-      await api.delete(`/${entity}/${id}`);
-      toast.success('Ação executada com sucesso!');
-      reflesh();
+      if (entity === 'problem') {
+        await api.delete(`/${entity}/${id}/cancel-delivery`);
+        toast.success('Ação executada com sucesso!');
+        console.tron.log(`/${entity}/${id}/cancel-delivery`);
+      } else {
+        await api.delete(`/${entity}/${id}`);
+        toast.success('Ação executada com sucesso!');
+        reflesh();
+      }
     } catch (error) {
       toast.error(`${error}Erro ao executar ação`);
     }

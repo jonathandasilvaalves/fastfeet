@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 
 import logo from '~/asserts/logo.png';
 
@@ -11,10 +11,18 @@ export default function Header() {
       <Content>
         <nav>
           <img src={logo} alt="Fastfeet" />
-          <Link to="/orders">ENCOMENDAS</Link>
-          <Link to="/deliverymans">ENTREGADORES</Link>
-          <Link to="/recipients">DESTINATÁRIOS</Link>
-          <Link to="/problems">PROBLEMAS</Link>
+          <NavLink to="/orders" activeClassName="selected">
+            ENCOMENDAS
+          </NavLink>
+          <NavLink to="/deliverymans" activeClassName="selected">
+            ENTREGADORES
+          </NavLink>
+          <NavLink to="/recipients" activeClassName="selected">
+            DESTINATÁRIOS
+          </NavLink>
+          <NavLink to="/problems" activeClassName="selected">
+            PROBLEMAS
+          </NavLink>
         </nav>
         <aside>
           <Profile>

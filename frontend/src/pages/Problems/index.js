@@ -46,7 +46,7 @@ export default function Problems() {
               <td>#{problem.id}</td>
               <td>{problem.DeliveryProblems[0].description}</td>
               <td>
-                <ActionsOrder canceled view />
+                <ActionsOrder entity="problem" item={problem} canceled view />
               </td>
             </tr>
           ))}

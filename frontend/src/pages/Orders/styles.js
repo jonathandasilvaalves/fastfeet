@@ -66,21 +66,6 @@ export const Status = styled.div`
   border-radius: 15px;
 `;
 
-export const Search = styled.div`
-  border: 1px solid #a8a8a8;
-  font-size: 12px;
-  align-items: center;
-  background: #fff;
-  border-radius: 5px;
-  color: #a8a8a8;
-
-  input {
-    border: 0;
-    padding: 10px 20px 10px 10px;
-    width: 200px;
-  }
-`;
-
 export const Listing = styled.table`
   width: 100%;
   margin-top: 20px;
@@ -109,6 +94,20 @@ export const Listing = styled.table`
         margin: 4px;
       }
     }
+  }
+`;
+export const Search = styled.div`
+  border: 1px solid #a8a8a8;
+  font-size: 12px;
+  align-items: center;
+  background: #fff;
+  border-radius: 5px;
+  color: #a8a8a8;
+
+  input {
+    border: 0;
+    padding: 10px 20px 10px 10px;
+    width: 200px;
   }
 `;
 
