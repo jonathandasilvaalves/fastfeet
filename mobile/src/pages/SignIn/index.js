@@ -5,13 +5,14 @@ import { useDispatch } from 'react-redux';
 import logo from '~/assets/logo.png';
 
 import { Container, Form, FormInput, SubmitButton } from './styles';
+import { signInRequest } from '~/store/modules/auth/actions';
 
 export default function SignIn() {
     const dispatch = useDispatch();
     const [id, setId] = useState('');
 
     function handleSubmit() {
-        dispatch();
+        dispatch(signInRequest(id));
     }
 
     return (
