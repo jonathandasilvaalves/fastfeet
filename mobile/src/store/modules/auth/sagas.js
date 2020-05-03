@@ -8,9 +8,9 @@ import { signInSuccess, signInFailure } from './actions';
 export function* signIn({ payload }) {
     try {
         const { id } = payload;
-        const { data } = yield call(api.get, `deliveryman/${id}`);
+        const { data } = yield call(api.get, `/deliveryman/session/${id}`);
 
-        yield put(signInSuccess(data));
+        yield put(signInSuccess(data.deliveryman));
     } catch (err) {
         Alert.alert('Falha na autenticação');
         yield put(signInFailure());

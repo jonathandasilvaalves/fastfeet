@@ -12,10 +12,18 @@ export default (signedIn = false) =>
                 Sign: createSwitchNavigator({
                     SignIn,
                 }),
-                App: createBottomTabNavigator({
-                    Dashboard,
-                    Profile,
-                }),
+                App: createBottomTabNavigator(
+                    {
+                        Dashboard,
+                        Profile,
+                    },
+                    {
+                        resetOnBlur: true,
+                        tabBarOptions: {
+                            activeTintColor: '#7149c1',
+                        },
+                    }
+                ),
             },
             {
                 initialRouteName: signedIn ? 'App' : 'Sign',
