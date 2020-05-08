@@ -60,7 +60,7 @@ export const Option = styled(RectButton)`
 `;
 
 export const OptionText = styled.Text`
-    color: #7d40e7;
+    color: ${(props) => (props.active ? '#7d40e7' : '#444444')};
     font-size: 14px;
-    text-decoration: none;
+    text-decoration: ${(props) => (props.active ? 'underline' : 'none')};
 `;

@@ -1,31 +1,21 @@
-import React, { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { StatusBar } from 'react-native';
-
-import api from '~/services/api';
 
 import Header from '~/components/Header';
 import Delivery from '~/components/Delivery';
 import { Container, List } from './styles';
 
-export default function Dashboard() {
-    const profile = useSelector((state) => state.user.profile);
+import { Request } from '~/store/modules/orders/actions';
 
-    const [deliveryman, setDeliveryman] = useState(profile);
-    const [orders, setOrders] = useState({});
+export default function Dashboard() {
+    const dispatch = useDispatch();
+    const profile = useSelector((state) => state.user.profile);
+    const { deliveries } = useSelector((state) => state.orders);
 
     useEffect(() => {
-        async function handleLoadOrders() {
-            if (deliveryman.id) {
-                const { data } = await api.get(
-                    `deliveryman/${profile.id}/deliveries`
-                );
-                setOrders(data.orders);
-                console.tron.log(orders);
-            }
-        }
-        handleLoadOrders();
-    }, [deliveryman]);
+        dispatch(Request(profile.id));
+    }, []);
 
     return (
         <>
@@ -33,7 +23,7 @@ export default function Dashboard() {
             <Container>
                 <List
                     ListHeaderComponent={<Header name={profile.name} />}
-                    data={orders}
+                    data={deliveries}
                     renderItem={({ item }) => (
                         <Delivery item={item} date={item.createdAt} />
                     )}
