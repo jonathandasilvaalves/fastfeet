@@ -8,10 +8,10 @@ import FileDeliverymanController from './app/controllers/FileDeliverymanControll
 import DeliverymanController from './app/controllers/DeliverymanController';
 import SignatureController from './app/controllers/SignaturesController';
 import OrdersController from './app/controllers/OrdersController';
-import AvailableController from './app/controllers/AvailableController';
 import AvailableOrdersController from './app/controllers/AvailableOrdersController';
 import DeliveryProblemsController from './app/controllers/DeliveryProblemsController';
 import DistributorProblemController from './app/controllers/DistributorProblemController';
+import AvailableDeliverymanController from './app/controllers/AvailableDeliverymanController';
 
 import authMiddleware from './app/middlewares/auth';
 
@@ -20,8 +20,11 @@ const upload = multer(multerConfig);
 
 routes.post('/sessions', SessionController.store);
 
-routes.get('/deliveryman/:id', AvailableController.index);
-routes.get('/deliveryman/:id/deliveries', AvailableOrdersController.index);
+routes.get('/deliveryman/session/:id', AvailableDeliverymanController.index);
+routes.get(
+  '/deliveryman/:id/deliveries/:status?',
+  AvailableOrdersController.index
+);
 routes.put('/deliveryman/order', AvailableOrdersController.update);
 routes.post('/signature', upload.single('file'), SignatureController.store);
 

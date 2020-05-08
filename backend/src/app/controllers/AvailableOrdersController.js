@@ -5,24 +5,54 @@ import { Op } from 'sequelize';
 import Deliverymans from '../models/Deliverymans';
 import Orders from '../models/Orders';
 import Signatures from '../models/Signatures';
+import Recipients from '../models/Recipients';
 
 class AvailableOrdersController {
   async index(req, res) {
-    const deliveryman = await Deliverymans.findOne({
-      where: { id: req.params.id },
-    });
+    const { id, status = null } = req.params;
+    const { page = 1 } = req.query;
+
+    const deliveryman = await Deliverymans.findByPk(id);
 
     if (!deliveryman) {
       return res.status(400).json({ error: 'Deliveryman does not exists' });
     }
 
-    const orders = await Orders.findAll({
-      where: {
-        deliveryman_id: req.params.id,
+    let where = {
+      deliveryman_id: id,
+      canceled_at: null,
+    };
+
+    if (status === 'done') {
+      where = {
+        ...where,
+        start_date: {
+          [Op.ne]: null,
+        },
         end_date: {
           [Op.ne]: null,
         },
-      },
+      };
+    }
+
+    if (status === 'progress') {
+      where = {
+        ...where,
+        start_date: {
+          [Op.ne]: null,
+        },
+        end_date: null,
+      };
+    }
+
+    const orders = await Orders.findAll({
+      where,
+      include: [
+        {
+          model: Recipients,
+          attributes: ['id', 'name', 'city'],
+        },
+      ],
     });
 
     return res.status(200).json({ orders });
