@@ -20,7 +20,7 @@ import {
     OptionText,
 } from './styles';
 
-export default function Header() {
+export default function Header({ navigation }) {
     const dispatch = useDispatch();
     const { status } = useSelector((state) => state.orders);
     const profile = useSelector((state) => state.user.profile);
@@ -49,8 +49,8 @@ export default function Header() {
                 <TitleHeader>Entregas</TitleHeader>
 
                 <OptionList>
-                    <Option onPress={() => handleOrders('progress')}>
-                        <OptionText active={status === 'progress'}>
+                    <Option onPress={() => handleOrders('pedding')}>
+                        <OptionText active={status === 'pedding'}>
                             Pendentes
                         </OptionText>
                     </Option>

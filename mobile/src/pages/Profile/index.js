@@ -1,5 +1,11 @@
-import React from 'react';
-import { StatusBar } from 'react-native';
+import React, { useMemo } from 'react';
+
+import { StatusBar, Button } from 'react-native';
+import { useSelector, useDispatch } from 'react-redux';
+
+import { format, parseISO } from 'date-fns';
+import pt from 'date-fns/locale/pt';
+import { singOut } from '~/store/modules/auth/actions';
 
 import {
     Container,
@@ -11,6 +17,20 @@ import {
 } from './styles';
 
 export default function Profile() {
+    const dispatch = useDispatch();
+    const profile = useSelector((state) => state.user.profile);
+
+    const dateFormated = useMemo(
+        () =>
+            format(parseISO(profile.created_at), 'dd/MM/yyyy', { locale: pt }),
+        [profile]
+    );
+
+    function handleLogout() {
+        alert('You tapped the button!');
+        dispatch(singOut());
+    }
+
     return (
         <>
             <StatusBar barStyle="dark-content" backgroundColor="#fff" />
@@ -18,18 +38,30 @@ export default function Profile() {
                 <ImageProfile source="https://api.adorable.io/avatars/66/abott@adorable.png" />
                 <Information>
                     <Label>Nome completo</Label>
-                    <Text>Jonathan Alves</Text>
+                    <Text>{profile.name}</Text>
                 </Information>
                 <Information>
                     <Label>E-mail</Label>
-                    <Text>jonathansilvaalves16@gmail.com</Text>
+                    <Text>{profile.email}</Text>
                 </Information>
                 <Information>
                     <Label>Data de cadastro</Label>
-                    <Text>17/10/2020</Text>
+                    <Text>{dateFormated}</Text>
                 </Information>
 
-                <ButtonLogout onPress={() => {}}>Logout</ButtonLogout>
+                <Button
+                    onPress={() => {
+                        handleLogout();
+                    }}
+                    title="Press Me"
+                />
+                <ButtonLogout
+                    onPress={() => {
+                        handleLogout();
+                    }}
+                >
+                    Texte 2
+                </ButtonLogout>
             </Container>
         </>
     );

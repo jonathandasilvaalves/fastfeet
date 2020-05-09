@@ -4,7 +4,7 @@ class AvailableDeliverymanController {
   async index(req, res) {
     const deliveryman = await Deliverymans.findOne({
       where: { id: req.params.id },
-      attributes: ['id', 'name', 'email'],
+      attributes: ['id', 'name', 'email', 'created_at'],
     });
 
     if (!deliveryman) {

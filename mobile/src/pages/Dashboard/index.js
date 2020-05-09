@@ -8,7 +8,7 @@ import { Container, List } from './styles';
 
 import { Request } from '~/store/modules/orders/actions';
 
-export default function Dashboard() {
+export default function Dashboard({ navigation }) {
     const dispatch = useDispatch();
     const profile = useSelector((state) => state.user.profile);
     const { deliveries } = useSelector((state) => state.orders);
@@ -22,10 +22,14 @@ export default function Dashboard() {
             <StatusBar barStyle="dark-content" backgroundColor="#fff" />
             <Container>
                 <List
-                    ListHeaderComponent={<Header name={profile.name} />}
+                    ListHeaderComponent={<Header navigation={navigation} />}
                     data={deliveries}
                     renderItem={({ item }) => (
-                        <Delivery item={item} date={item.createdAt} />
+                        <Delivery
+                            item={item}
+                            date={item.createdAt}
+                            navigation={navigation}
+                        />
                     )}
                     keyExtractor={(item) => String(item.id)}
                 />

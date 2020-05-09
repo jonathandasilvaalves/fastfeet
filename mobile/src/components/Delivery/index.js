@@ -1,6 +1,7 @@
 import React, { useMemo } from 'react';
 import { format, parseISO } from 'date-fns';
 import pt from 'date-fns/locale/pt';
+import { CommonActions } from '@react-navigation/native';
 import {
     Container,
     HeaderTitle,
@@ -16,11 +17,22 @@ import {
 
 import TimeLine from './TimeLine';
 
-export default function Delivery({ item, date }) {
+export default function Delivery({ item, date, navigation }) {
     const dateFormated = useMemo(
         () => format(parseISO(date), 'dd/MM/yyyy', { locale: pt }),
         [date]
     );
+
+    function handlePress(delivery_id) {
+        navigation.dispatch(
+            CommonActions.navigate({
+                name: 'Details',
+                params: {
+                    id: delivery_id,
+                },
+            })
+        );
+    }
 
     return (
         <Container>
@@ -39,7 +51,11 @@ export default function Delivery({ item, date }) {
                     <Data>{item.Recipient.city}</Data>
                 </ViewDetails>
                 <ViewDetails>
-                    <ButtonMoreDetails onPress={() => {}}>
+                    <ButtonMoreDetails
+                        onPress={() => {
+                            handlePress(item.id);
+                        }}
+                    >
                         <TextButtonDetails>Ver detalhes</TextButtonDetails>
                     </ButtonMoreDetails>
                 </ViewDetails>
