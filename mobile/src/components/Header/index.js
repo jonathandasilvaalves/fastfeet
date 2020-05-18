@@ -4,6 +4,8 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import { Request } from '~/store/modules/orders/actions';
 
+import photo_unavailable from '~/assets/sem_foto.png';
+
 import {
     Container,
     HeaderPage,
@@ -20,7 +22,7 @@ import {
     OptionText,
 } from './styles';
 
-export default function Header({ navigation }) {
+export default function Header({ navigation: { navigate } }) {
     const dispatch = useDispatch();
     const { status } = useSelector((state) => state.orders);
     const profile = useSelector((state) => state.user.profile);
@@ -28,19 +30,29 @@ export default function Header({ navigation }) {
     function handleOrders(value) {
         dispatch(Request(profile.id, value));
     }
+    function handleLogout() {
+        navigate('Profile');
+    }
 
     return (
         <Container>
             <HeaderPage>
                 <Profile>
-                    <ImageProfile source="https://api.adorable.io/avatars/66/abott@adorable.png" />
+                    {profile && profile.DeliverymanFile ? (
+                        <ImageProfile
+                            source={{ uri: profile.DeliverymanFile.url }}
+                        />
+                    ) : (
+                        <ImageProfile source={photo_unavailable} />
+                    )}
+
                     <Welcome>
                         <WelTest>Bem vindo de volta,</WelTest>
                         <ProfileName>{profile.name}</ProfileName>
                     </Welcome>
                 </Profile>
 
-                <IconLogout>
+                <IconLogout onPress={() => handleLogout()}>
                     <Icon name="exit-to-app" size={24} color="#ff0000" />
                 </IconLogout>
             </HeaderPage>

@@ -1,11 +1,13 @@
 import React, { useMemo } from 'react';
 
-import { StatusBar, Button } from 'react-native';
+import { StatusBar } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { format, parseISO } from 'date-fns';
 import pt from 'date-fns/locale/pt';
 import { singOut } from '~/store/modules/auth/actions';
+
+import photo_unavailable from '~/assets/sem_foto.png';
 
 import {
     Container,
@@ -14,6 +16,7 @@ import {
     Label,
     Text,
     ButtonLogout,
+    ContainerButton,
 } from './styles';
 
 export default function Profile() {
@@ -27,7 +30,6 @@ export default function Profile() {
     );
 
     function handleLogout() {
-        alert('You tapped the button!');
         dispatch(singOut());
     }
 
@@ -35,7 +37,14 @@ export default function Profile() {
         <>
             <StatusBar barStyle="dark-content" backgroundColor="#fff" />
             <Container>
-                <ImageProfile source="https://api.adorable.io/avatars/66/abott@adorable.png" />
+                {profile && profile.DeliverymanFile ? (
+                    <ImageProfile
+                        source={{ uri: profile.DeliverymanFile.url }}
+                    />
+                ) : (
+                    <ImageProfile source={photo_unavailable} />
+                )}
+
                 <Information>
                     <Label>Nome completo</Label>
                     <Text>{profile.name}</Text>
@@ -48,20 +57,9 @@ export default function Profile() {
                     <Label>Data de cadastro</Label>
                     <Text>{dateFormated}</Text>
                 </Information>
-
-                <Button
-                    onPress={() => {
-                        handleLogout();
-                    }}
-                    title="Press Me"
-                />
-                <ButtonLogout
-                    onPress={() => {
-                        handleLogout();
-                    }}
-                >
-                    Texte 2
-                </ButtonLogout>
+                <ContainerButton onPress={handleLogout}>
+                    <ButtonLogout>Logout</ButtonLogout>
+                </ContainerButton>
             </Container>
         </>
     );

@@ -11,6 +11,7 @@ export default function orders(state = INITIAL_STATE, action) {
         switch (action.type) {
             case '@orders/REQUEST': {
                 draft.loading = true;
+                draft.status = action.payload.status;
                 break;
             }
             case '@orders/SUCCESS': {

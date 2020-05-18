@@ -1,4 +1,5 @@
 import styled from 'styled-components/native';
+import { TouchableOpacity } from 'react-native';
 
 import Button from '~/components/Button';
 
@@ -37,4 +38,8 @@ export const ButtonLogout = styled(Button)`
     background: #e74040;
     width: 100%;
     margin-top: 15px;
+`;
+
+export const ContainerButton = styled(TouchableOpacity)`
+    width: 100%;
 `;

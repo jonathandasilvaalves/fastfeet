@@ -1,6 +1,7 @@
 import styled from 'styled-components/native';
 import Icone from 'react-native-vector-icons/MaterialIcons';
 import { RectButton } from 'react-native-gesture-handler';
+import { TouchableOpacity } from 'react-native';
 
 export const Container = styled.View`
     padding-bottom: 15px;
@@ -38,7 +39,7 @@ export const Data = styled.Text`
     font-size: 12px;
     font-weight: bold;
 `;
-export const ButtonMoreDetails = styled(RectButton)``;
+export const ButtonMoreDetails = styled(TouchableOpacity)``;
 export const TextButtonDetails = styled.Text`
     color: #7149c1;
     font-weight: bold;

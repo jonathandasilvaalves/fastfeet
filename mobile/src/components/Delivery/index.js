@@ -23,15 +23,18 @@ export default function Delivery({ item, date, navigation }) {
         [date]
     );
 
-    function handlePress(delivery_id) {
-        navigation.dispatch(
-            CommonActions.navigate({
-                name: 'Details',
-                params: {
-                    id: delivery_id,
-                },
-            })
-        );
+    function handlePress(order) {
+        // navigation.dispatch(
+        //   CommonActions.navigate({
+        //     name: 'Details',
+        //   params: {
+        //     id: delivery_id,
+        // },
+        // })
+        // );
+        navigation.navigate('Details', {
+            order,
+        });
     }
 
     return (
@@ -53,7 +56,7 @@ export default function Delivery({ item, date, navigation }) {
                 <ViewDetails>
                     <ButtonMoreDetails
                         onPress={() => {
-                            handlePress(item.id);
+                            handlePress(item);
                         }}
                     >
                         <TextButtonDetails>Ver detalhes</TextButtonDetails>

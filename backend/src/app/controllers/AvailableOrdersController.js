@@ -50,7 +50,15 @@ class AvailableOrdersController {
       include: [
         {
           model: Recipients,
-          attributes: ['id', 'name', 'city'],
+          attributes: [
+            'id',
+            'name',
+            'street',
+            'number',
+            'city',
+            'state',
+            'cep',
+          ],
         },
       ],
     });

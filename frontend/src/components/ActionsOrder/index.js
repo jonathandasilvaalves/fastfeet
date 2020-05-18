@@ -44,7 +44,6 @@ export default function ActionsOrder({
       if (entity === 'problem') {
         await api.delete(`/${entity}/${id}/cancel-delivery`);
         toast.success('Ação executada com sucesso!');
-        console.tron.log(`/${entity}/${id}/cancel-delivery`);
       } else {
         await api.delete(`/${entity}/${id}`);
         toast.success('Ação executada com sucesso!');

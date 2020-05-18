@@ -7,11 +7,41 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import SignIn from './pages/SignIn';
 import Dashboard from './pages/Dashboard';
 import Profile from './pages/Profile';
+import DetailsOrder from './pages/DetailsOrder';
 
-Icon.loadFont();
+// Icon.loadFont();
 
 const Stack = createStackNavigator();
 const Tabs = createBottomTabNavigator();
+
+function DashboardStack() {
+    return (
+        <Stack.Navigator
+            screenOptions={{
+                headerBackTitleVisible: false,
+                herderTitleAlign: 'center',
+                headerTintColor: '#fff',
+                headerTransparent: true,
+            }}
+            initialRouteName="Dashboard"
+        >
+            <Stack.Screen
+                name="Dashboard"
+                component={Dashboard}
+                options={{
+                    headerShown: false,
+                }}
+            />
+            <Stack.Screen
+                name="Details"
+                component={DetailsOrder}
+                options={{
+                    title: 'Detalhes da encomenda',
+                }}
+            />
+        </Stack.Navigator>
+    );
+}
 
 export default function createRouter(signedIn = false) {
     return !signedIn ? (
@@ -28,7 +58,7 @@ export default function createRouter(signedIn = false) {
         >
             <Tabs.Screen
                 name="Dashboard"
-                component={Dashboard}
+                component={DashboardStack}
                 options={{
                     tabBarLabel: 'Entregas',
                     tabBarIcon: ({ color }) => (
