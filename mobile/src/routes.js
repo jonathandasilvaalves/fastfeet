@@ -8,6 +8,7 @@ import SignIn from './pages/SignIn';
 import Dashboard from './pages/Dashboard';
 import Profile from './pages/Profile';
 import DetailsOrder from './pages/DetailsOrder';
+import ViewProblem from './pages/ViewProblem';
 
 // Icon.loadFont();
 
@@ -37,6 +38,13 @@ function DashboardStack() {
                 component={DetailsOrder}
                 options={{
                     title: 'Detalhes da encomenda',
+                }}
+            />
+            <Stack.Screen
+                name="ViewProblem"
+                component={ViewProblem}
+                options={{
+                    title: 'Visualizar problemas',
                 }}
             />
         </Stack.Navigator>

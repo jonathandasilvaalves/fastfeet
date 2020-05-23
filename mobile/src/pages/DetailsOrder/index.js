@@ -23,6 +23,12 @@ import Background from '~/components/Background';
 export default function DetailsOrder({ navigation, route }) {
     const { order } = route.params;
 
+    function handleViewProblem() {
+        navigation.navigate('ViewProblem', {
+            id: order.id,
+        });
+    }
+
     return (
         <Background>
             <Container>
@@ -86,7 +92,7 @@ export default function DetailsOrder({ navigation, route }) {
                             />
                             <ButtonText>Informar Problema</ButtonText>
                         </Button>
-                        <Button>
+                        <Button onPress={handleViewProblem}>
                             <Icon
                                 name="info-outline"
                                 size={30}
