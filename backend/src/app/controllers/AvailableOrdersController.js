@@ -47,6 +47,8 @@ class AvailableOrdersController {
 
     const orders = await Orders.findAll({
       where,
+      limit: 5,
+      offset: (page - 1) * 5,
       include: [
         {
           model: Recipients,
