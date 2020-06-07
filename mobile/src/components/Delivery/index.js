@@ -1,5 +1,6 @@
 import React, { useMemo } from 'react';
 import { format, parseISO } from 'date-fns';
+import PropTypes from 'prop-types';
 import pt from 'date-fns/locale/pt';
 import { CommonActions } from '@react-navigation/native';
 import {
@@ -66,3 +67,8 @@ export default function Delivery({ item, date, navigation }) {
         </Container>
     );
 }
+
+Delivery.propTypes = {
+    item: PropTypes.shape().isRequired,
+    date: PropTypes.string.isRequired,
+};

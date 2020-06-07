@@ -1,6 +1,7 @@
 import React from 'react';
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import PropTypes from 'prop-types';
 
 import { statusFormatedOrder, formatDataOrder } from '~/util';
 
@@ -114,3 +115,11 @@ export default function DetailsOrder({ navigation, route }) {
         </Background>
     );
 }
+
+DetailsOrder.propTypes = {
+    route: PropTypes.shape({
+        params: PropTypes.shape({
+            order: PropTypes.shape(),
+        }),
+    }).isRequired,
+};

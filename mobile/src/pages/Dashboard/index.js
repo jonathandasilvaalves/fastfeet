@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { StatusBar } from 'react-native';
+import PropTypes from 'prop-types';
 
 import Header from '~/components/Header';
 import Delivery from '~/components/Delivery';

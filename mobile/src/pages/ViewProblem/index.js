@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 // import { Text } from 'react-native';
-
+import PropTypes from 'prop-types';
 import api from '~/services/api';
 
 import Background from '~/components/Background';
@@ -67,3 +67,11 @@ const ViewProblem = ({ route }) => {
 };
 
 export default ViewProblem;
+
+ViewProblem.propTypes = {
+    route: PropTypes.shape({
+        params: PropTypes.shape({
+            id: PropTypes.number,
+        }),
+    }).isRequired,
+};
