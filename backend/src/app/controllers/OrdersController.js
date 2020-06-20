@@ -6,7 +6,8 @@ import Recipient from '../models/Recipients';
 import Deliveryman from '../models/Deliverymans';
 import DeliverymanFile from '../models/DeliverymanFiles';
 
-import Mail from '../../lib/Mail';
+import NewOrderMail from '../jobs/NewOrderMail';
+import Queue from '../../lib/Queue';
 
 class OrdersController {
   async store(req, res) {
@@ -15,6 +16,8 @@ class OrdersController {
       deliveryman_id: Yup.number().required(),
       product: Yup.string().required(),
     });
+
+    const { product } = req.body;
 
     if (!(await schema.isValid(req.body))) {
       return res.status(400).json({ error: 'Validation fails' });
@@ -34,14 +37,9 @@ class OrdersController {
 
     const order = await Orders.create(req.body);
 
-    await Mail.sendMail({
-      to: `${deliveryman.name} <${deliveryman.email}>`,
-      subject: 'Nova entrega na fila',
-      template: 'entrega',
-      context: {
-        deliveryman: deliveryman.name,
-        product: req.body.product,
-      },
+    await Queue.add(NewOrderMail.key, {
+      deliveryman,
+      product,
     });
 
     return res.json({ order });

@@ -3,7 +3,8 @@ import DeliveryProblems from '../models/DeliveryProblems';
 import Orders from '../models/Orders';
 import Deliveryman from '../models/Deliverymans';
 
-import Mail from '../../lib/Mail';
+import CancellationMail from '../jobs/CancellationMail';
+import Queue from '../../lib/Queue';
 
 class DeliveryProblemsController {
   async store(req, res) {
@@ -61,14 +62,9 @@ class DeliveryProblemsController {
 
     const deliveryman = await Deliveryman.findByPk(order.deliveryman_id);
 
-    await Mail.sendMail({
-      to: `${deliveryman.name} <${deliveryman.email}>`,
-      subject: 'Entrega Cancelada',
-      template: 'cancelamento',
-      context: {
-        deliveryman: deliveryman.name,
-        product: order.product,
-      },
+    await Queue.add(CancellationMail.key, {
+      deliveryman,
+      order,
     });
 
     return res.json({ order });
