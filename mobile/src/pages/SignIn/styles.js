@@ -24,3 +24,10 @@ export const FormInput = styled(Input)`
 export const SubmitButton = styled(Button)`
     margin-top: 5px;
 `;
+
+export const Welcome = styled.Text`
+    color: #fff;
+    font-weight: bold;
+    font-size: 20px;
+    margin-top: 5px;
+`;
