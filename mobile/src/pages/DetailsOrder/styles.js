@@ -58,6 +58,7 @@ export const Button = styled(TouchableOpacity)`
     align-items: center;
     border: 1px solid #999;
     border-radius: 5px;
+    background: ${(props) => (!props.disabled ? '#fff' : '#eee')};
 `;
 export const ButtonText = styled.Text`
     text-align: center;

@@ -30,6 +30,12 @@ export default function DetailsOrder({ navigation, route }) {
         });
     }
 
+    function handleCreateProblem() {
+        navigation.navigate('CreateProblem', {
+            id: order.id,
+        });
+    }
+
     return (
         <Background>
             <Container>
@@ -85,7 +91,10 @@ export default function DetailsOrder({ navigation, route }) {
                         </BlockDatas>
                     </DivBlock>
                     <BlockButtons>
-                        <Button>
+                        <Button
+                            onPress={handleCreateProblem}
+                            disabled={order.status === 'done'}
+                        >
                             <Icon
                                 name="highlight-off"
                                 size={30}
@@ -101,7 +110,7 @@ export default function DetailsOrder({ navigation, route }) {
                             />
                             <ButtonText>Visualizar Problemas</ButtonText>
                         </Button>
-                        <Button>
+                        <Button disabled={order.status !== 'progress'}>
                             <Icon
                                 name="check-circle"
                                 size={30}

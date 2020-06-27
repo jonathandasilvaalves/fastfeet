@@ -9,6 +9,7 @@ import Dashboard from './pages/Dashboard';
 import Profile from './pages/Profile';
 import DetailsOrder from './pages/DetailsOrder';
 import ViewProblem from './pages/ViewProblem';
+import CreateProblem from './pages/ProblemOrder';
 
 // Icon.loadFont();
 
@@ -45,6 +46,13 @@ function DashboardStack() {
                 component={ViewProblem}
                 options={{
                     title: 'Visualizar problemas',
+                }}
+            />
+            <Stack.Screen
+                name="CreateProblem"
+                component={CreateProblem}
+                options={{
+                    title: 'Informar problema',
                 }}
             />
         </Stack.Navigator>
