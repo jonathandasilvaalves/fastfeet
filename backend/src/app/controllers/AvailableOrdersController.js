@@ -38,17 +38,14 @@ class AvailableOrdersController {
     if (status === 'progress') {
       where = {
         ...where,
-        start_date: {
-          [Op.ne]: null,
-        },
         end_date: null,
       };
     }
 
     const orders = await Orders.findAll({
       where,
-      limit: 5,
-      offset: (page - 1) * 5,
+      limit: 3,
+      offset: (page - 1) * 3,
       include: [
         {
           model: Recipients,
