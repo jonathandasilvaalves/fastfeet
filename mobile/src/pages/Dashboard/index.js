@@ -12,11 +12,15 @@ import { Request } from '~/store/modules/orders/actions';
 export default function Dashboard({ navigation }) {
     const dispatch = useDispatch();
     const profile = useSelector((state) => state.user.profile);
-    const { deliveries } = useSelector((state) => state.orders);
+    const { deliveries, status, page } = useSelector((state) => state.orders);
 
     useEffect(() => {
         dispatch(Request(profile.id));
     }, []);
+
+    function loadOrder() {
+        dispatch(Request(profile.id, status, page + 1, deliveries));
+    }
 
     return (
         <>
@@ -25,6 +29,8 @@ export default function Dashboard({ navigation }) {
                 <List
                     ListHeaderComponent={<Header navigation={navigation} />}
                     data={deliveries}
+                    onEndReachedThreshold={0.4}
+                    onEndReached={loadOrder}
                     renderItem={({ item }) => (
                         <Delivery
                             item={item}

@@ -7,14 +7,16 @@ import { Success, Failure } from './actions';
 
 export function* loadOrders({ payload }) {
     try {
-        const { id, status } = payload;
+        const { id, status, page, oldOrders } = payload;
 
         const { data } = yield call(
             api.get,
-            `/deliveryman/${id}/deliveries/${status}`
+            `/deliveryman/${id}/deliveries/${status}?page=${page}`
         );
 
-        yield put(Success(data.orders));
+        const result = [...oldOrders, ...data.orders];
+
+        yield put(Success(result));
     } catch (err) {
         Alert.alert('Falha na autenticação');
         yield put(Failure());

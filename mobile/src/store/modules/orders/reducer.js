@@ -2,8 +2,9 @@ import produce from 'immer';
 
 const INITIAL_STATE = {
     loading: false,
-    status: 'progress',
+    status: 'all',
     deliveries: [],
+    page: 1,
 };
 
 export default function orders(state = INITIAL_STATE, action) {
@@ -12,6 +13,7 @@ export default function orders(state = INITIAL_STATE, action) {
             case '@orders/REQUEST': {
                 draft.loading = true;
                 draft.status = action.payload.status;
+                draft.page = action.payload.page;
                 break;
             }
             case '@orders/SUCCESS': {

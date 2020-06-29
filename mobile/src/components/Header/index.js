@@ -61,8 +61,8 @@ export default function Header({ navigation: { navigate } }) {
                 <TitleHeader>Entregas</TitleHeader>
 
                 <OptionList>
-                    <Option onPress={() => handleOrders('pedding')}>
-                        <OptionText active={status === 'pedding'}>
+                    <Option onPress={() => handleOrders('progress')}>
+                        <OptionText active={status === 'progress'}>
                             Pendentes
                         </OptionText>
                     </Option>

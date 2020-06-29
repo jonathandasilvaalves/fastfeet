@@ -1,7 +1,7 @@
-export function Request(id, status = 'all') {
+export function Request(id, status = 'all', page = 1, oldOrders = []) {
     return {
         type: '@orders/REQUEST',
-        payload: { id, status },
+        payload: { id, status, page, oldOrders },
     };
 }
 
