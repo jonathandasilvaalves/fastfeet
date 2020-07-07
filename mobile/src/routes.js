@@ -10,6 +10,7 @@ import Profile from './pages/Profile';
 import DetailsOrder from './pages/DetailsOrder';
 import ViewProblem from './pages/ViewProblem';
 import CreateProblem from './pages/ProblemOrder';
+import ConfirmDelivery from './pages/ConfirmDelivery';
 
 // Icon.loadFont();
 
@@ -53,6 +54,13 @@ function DashboardStack() {
                 component={CreateProblem}
                 options={{
                     title: 'Informar problema',
+                }}
+            />
+            <Stack.Screen
+                name="ConfirmDelivery"
+                component={ConfirmDelivery}
+                options={{
+                    title: 'Confirmar entrega',
                 }}
             />
         </Stack.Navigator>

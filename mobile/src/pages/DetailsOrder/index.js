@@ -36,6 +36,12 @@ export default function DetailsOrder({ navigation, route }) {
         });
     }
 
+    function handleConfirmDelivery() {
+        navigation.navigate('ConfirmDelivery', {
+            id: order.id,
+        });
+    }
+
     return (
         <Background>
             <Container>
@@ -110,7 +116,10 @@ export default function DetailsOrder({ navigation, route }) {
                             />
                             <ButtonText>Visualizar Problemas</ButtonText>
                         </Button>
-                        <Button disabled={order.status !== 'progress'}>
+                        <Button
+                            onPress={handleConfirmDelivery}
+                            disabled={order.status !== 'progress'}
+                        >
                             <Icon
                                 name="check-circle"
                                 size={30}
