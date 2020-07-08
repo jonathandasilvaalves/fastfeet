@@ -9,11 +9,6 @@ export const Container = styled.View`
     border-radius: 4px;
 `;
 
-export const Submit = styled(Button)`
-    margin-top: 10px;
-    background: #7d40e7;
-`;
-
 export const ButtonCamera = styled(Button)``;
 
 export const SelectImage = styled.TouchableOpacity`
