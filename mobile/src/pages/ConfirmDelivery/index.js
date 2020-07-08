@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 import { Alert } from 'react-native';
 import {
     Container,
-    Submit,
     ButtonCamera,
     SelectImage,
     Image,
@@ -15,8 +15,7 @@ import Camera from '~/components/Camera';
 import api from '~/services/api';
 
 const ConfirmDelivery = ({ route, navigation }) => {
-    const { id } = route.params;
-
+    const { id } = useSelector((state) => state.user.profile);
     const [image, setImage] = useState();
     const [openCamera, setOpenCamera] = useState(false);
 
@@ -36,7 +35,31 @@ const ConfirmDelivery = ({ route, navigation }) => {
             { cancelable: false }
         );
     }
-    async function handleSubmit() {}
+    async function handleSubmit() {
+        const params = {};
+        try {
+            const data = new FormData();
+            data.append('file', {
+                type: 'image/jpg',
+                uri: image,
+                name: 'confdelivery.jpg',
+            });
+
+            const response = await api.post('signature', data);
+            params.signature_id = response.data.id;
+
+            await api.put(`deliveryman/order`, {
+                id: route.params.id,
+                deliveryman_id: id,
+                end_date: new Date(),
+                signature_id: 1,
+            });
+
+            Alert.alert('Entrega confirmada!');
+        } catch (error) {
+            Alert.alert('Erro no registro', error);
+        }
+    }
 
     return (
         <Background>
